@@ -16,6 +16,7 @@ from keras.utils.np_utils import to_categorical
 from keras import backend as K
 # Import image crop window and other pre defined settings
 from defines import *
+from keras.callbacks import TensorBoard
 
 #This code sets up the parser for command line arguments specifying parameters for training.
 parser=argparse.ArgumentParser()
@@ -36,6 +37,12 @@ args.directories.sort() #sort directories once, so they will be in the same orde
 time_format='%Y-%m-%d_%H-%M-%S'
 trainstart=datetime.datetime.now()
 time_string=trainstart.strftime(time_format)
+
+tbCallBack = TensorBoard(log_dir='./log', histogram_freq=1,
+                         write_graph=True,
+                         write_grads=True,
+                         batch_size=batch_size,
+                         write_images=True)
 
 steer=np.array([]) #this is where we store the steering training data
 data_lengths=[] #this will hold the lengths of each file of steering data after zeros are trimmed.
